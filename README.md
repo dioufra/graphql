@@ -30,7 +30,7 @@ This project is a sophisticated web application designed to empower users in cra
    # For GitHub users
    ```
 ## hosting link
-[graphql](https://subtle-khapse-76a5fe.netlify.app)
+[graphql](https://01-graphql.netlify.app/)
 
 ## Authors
 **[frdiouf](https://github.com/dioufra?tab=repositories)**<br>
