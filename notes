@@ -1,0 +1,179 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F8F9FA;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+c-profile-page {
+    display: grid;
+    height: calc(100vh - 10px);
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr auto;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.33);
+    gap: 5px;
+    background-color: #FFFFFF;
+
+    & .header {
+        grid-column: 1 / -1;
+        background-color: #343A40;
+        color: #FFFFFF;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    & .footer {
+        grid-column: 1 / -1;
+        background-color: #343A40;
+        color: #FFFFFF;
+        text-align: center;
+        padding: 0.5rem;
+    }
+
+    & .left-aside {
+        background-color: #F8F9FA;
+        grid-row: 2 / 3;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 10px;
+        padding: 1rem;
+
+        & .level {
+            background: linear-gradient(to bottom, #007BFF, #0056b3);
+            color: #FFFFFF;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        & .technologies {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5%;
+            background-color: #FFFFFF;
+            padding: 1em;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        & .technologies label {
+            color: #343A40;
+        }
+
+        & .technologies .bar {
+            width: 100%;
+            height: 10px;
+            background-color: #28A745;
+            border-radius: 5px;
+        }
+    }
+
+    & .attributes {
+        background-color: #007BFF;
+        color: #FFFFFF;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        padding: 1rem;
+        grid-column: 2;      /* Keep attributes in the second column */
+        grid-row: 2;         /* Move attributes to the second row */
+
+        & .infos {
+            border: solid 3px #0056b3;
+            text-align: center;
+            border-radius: 10px;
+            padding: 1rem;
+            background-color: #FFFFFF;
+            color: #343A40;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            gap: 1.5rem;
+        }
+
+        & .infos .name {
+            font-size: 1.5em;
+        }
+
+        & .infos .value {
+            font-size: 1.3em;
+        }
+    }
+
+    & .right-aside {
+        background-color: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        grid-column: 1 / 3;  /* Span the right aside across both columns */
+        grid-row: 3;         /* Move graph to the third row */
+
+        & .graph-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background-color: #343A40;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        > * {
+            grid-column: 1 / -1 !important;
+            grid-row: auto !important;
+        }
+    }
+}
+
+
+renderStyle() {
+        const style = document.createElement('style');
+        style.innerHTML = `
+            :host {
+                display: block;
+                width: 100%;
+                height: 100%;
+                margin: 0 auto;
+            }
+            svg {
+                width: 100%;
+                height: 100%;
+            }
+            circle {
+                cursor: pointer;
+                transition: opacity .3s;
+                z-index: 1;
+            }
+            path {
+                z-index: 0;
+            }
+    
+            circle:hover {
+                opacity: .5;
+            }
+    
+            .label {
+                opacity: 0;
+            }
+            
+            .label-active {
+                opacity: 1;
+            }
+    
+            .is-active {
+                opacity: 1;
+            }
+        `;
+        this.shadow.appendChild(style);
+    }
+    

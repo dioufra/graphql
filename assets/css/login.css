@@ -1,0 +1,100 @@
+.l-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--bg-color); /* Change background color to white */
+}
+
+.form {
+  width: 360px;
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px var(--shadow-color); /* Change box shadow color */
+  background-color: #f1f1f1; /* Set form background color to grey */
+}
+
+.form__title {
+  font-weight: 700; /* Increase font weight */
+  margin-bottom: 1.5rem; /* Increase margin */
+  color: var(--text-color); /* Change text color */
+}
+
+.form__div {
+  position: relative;
+  height: 58px; /* Increase height */
+  margin-bottom: 2rem; /* Increase margin */
+}
+
+.form__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: var(--normal-font-size);
+  border: none; /* Remove border */
+  border: 2px solid black; /* Add bottom border */
+  outline: none;
+  padding: 1rem;
+  background: none;
+  color: var(--text-color); /* Change text color */
+}
+
+.form__label {
+  position: absolute;
+  left: 0.5rem; /* Adjust left position */
+  top: 1rem;
+  padding: 0 0.25rem;
+  background-color: #f1f1f1; /* Set label background color to grey */
+  color: var(--input-color); /* Change text color */
+  font-size: var(--normal-font-size);
+  transition: .3s;
+}
+
+.form__button {
+  display: block;
+  margin: 0 auto; /* Center button horizontally */
+  padding: 0.75rem 2rem;
+  outline: none;
+  border: none;
+  background-color: var(--first-color);
+  color: var(--bg-color); /* Change text color */
+  font-size: var(--normal-font-size);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.form__button:hover {
+  background-color: var(--second-color); /* Change background color on hover */
+  box-shadow: 0 10px 36px rgba(0, 0, 0, .15);
+}
+
+/* Input focus move up label */
+.form__input:focus + .form__label {
+  top: -1.5rem; /* Adjust top position */
+  left: 0; /* Adjust left position */
+  font-size: var(--small-font-size);
+  color: var(--first-color);
+}
+
+/* Input focus sticky top label */
+.form__input:not(:placeholder-shown).form__input:not(:focus) + .form__label {
+  top: -1.5rem; /* Adjust top position */
+  left: 0; /* Adjust left position */
+  font-size: var(--small-font-size);
+}
+
+/* Input focus */
+.form__input:focus {
+  border-color: var(--first-color); /* Change border color on focus */
+}
+
+
+
+#error-message {
+  text-align: center;
+  color: red;
+  margin-bottom: 4vh;
+}
