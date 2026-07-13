@@ -76,7 +76,7 @@ c-profile-page {
     grid-column: 1;
     grid-row: 2 / 4;
     display: grid;
-    grid-template-rows: minmax(200px, 1fr) auto;
+    grid-template-rows: 1fr auto;
     gap: 16px;
     padding: 1.25rem;
 
@@ -86,12 +86,13 @@ c-profile-page {
       padding: 0.5rem;
       display: flex;
       flex-direction: column;
+      justify-content: center;
 
       level-chart {
         display: block;
         position: relative;
-        flex: 1;
-        min-height: 180px;
+        height: 220px;
+        width: 100%;
       }
     }
 

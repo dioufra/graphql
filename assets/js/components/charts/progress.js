@@ -6,7 +6,7 @@ export default class ProgressChart extends HTMLElement {
 
         this.max = 100;
         this.value = parseFloat(this.getAttribute('value'));
-        this.label = this.getAttribute('label').split('_')[1];
+        this.label = this.formatLabel(this.getAttribute('label').split('_')[1]);
         this.shadow = this.attachShadow({ mode: 'open' });
 
         const row = strToDom(`<div class="row"></div>`);
@@ -56,7 +56,6 @@ export default class ProgressChart extends HTMLElement {
                 font-size: 0.9rem;
                 font-weight: 600;
                 color: #e8ecf3;
-                text-transform: capitalize;
             }
             .bar {
                 flex: 1;
@@ -85,6 +84,12 @@ export default class ProgressChart extends HTMLElement {
         this.addEventListener('mouseover', () => this.handleMouseOver(tooltip));
         this.addEventListener('mousemove', (e) => this.handleMouseMove(e, tooltip));
         this.addEventListener('mouseout', () => this.handleMouseOut(tooltip));
+    }
+
+    formatLabel(raw = '') {
+        const acronyms = new Set(['html', 'css', 'js', 'sql', 'tcp', 'ai', 'sh', 'graphql']);
+        const key = raw.toLowerCase();
+        return acronyms.has(key) ? raw.toUpperCase() : key.charAt(0).toUpperCase() + key.slice(1);
     }
 
     handleMouseOver(tooltip) {

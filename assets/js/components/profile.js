@@ -124,7 +124,7 @@ export default class ProfilePage extends HTMLElement {
                 </div>
                 <div class="infos">
                     <div class="name">xp</div>
-                    <div class="value">${this.user.xp / 1000}</div>
+                    <div class="value">${Math.round(this.user.xp / 1000).toLocaleString()}</div>
                 </div>
                 <div class="infos">
                     <div class="name">projects</div>
