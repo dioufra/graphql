@@ -5,35 +5,37 @@ export class BarChart extends HTMLElement {
     constructor() {
         super();
         this.shadow = this.attachShadow({ mode: 'open' });
-        this.svg = strToDom(`<svg viewBox="-1 -1 4 4"></svg>`);
+        this.svg = strToDom(`<svg viewBox="-1 -1 4 4" preserveAspectRatio="none"></svg>`);
         this.shadow.appendChild(this.svg);
 
         this.data = this.getAttribute('data').split(';').map(v => parseFloat(v));
 
         this.names = this.getAttribute('labels')?.split(';') ?? [];
         this.max = Math.max(...this.data);
-        this.barWidth = (2 / this.data.length);
-        const maxHeight = 3;
+        this.barWidth = (4 / this.data.length); // span the full plot width (x: -1 → 3)
+        const maxHeight = 3.8;
 
         this.AddDataLabel();
 
         let xPos = -1;
         this.points = this.data.map((data, k) => {
             const bar = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            const gap = this.barWidth * 0.12;
             const height = (data / this.max) * maxHeight;
-            const yPos = maxHeight - height;
-            bar.setAttribute('x', `${xPos}`);
+            const yPos = 3 - height; // base sits on the x-axis (y = 3)
+            bar.setAttribute('x', `${xPos + gap / 2}`);
             bar.setAttribute('y', `${yPos - 0.02}`);
-            bar.setAttribute('width', `${this.barWidth}`);
+            bar.setAttribute('width', `${this.barWidth - gap}`);
             bar.setAttribute('height', `${height + 0.02}`);
-            bar.setAttribute('fill', `#A11111`);
+            bar.setAttribute('rx', `${(this.barWidth - gap) * 0.15}`);
+            bar.setAttribute('fill', `#ff5d73`);
             bar.addEventListener('mouseover', (e) => this.handlePathHover(e, bar, k));
             bar.addEventListener('mouseout', () => this.handlePathOut(bar));
             this.svg.appendChild(bar);
 
             const point = new Point(xPos, yPos);
 
-            xPos += (this.barWidth + 0.009);
+            xPos += this.barWidth;
             return point;
         });
 
@@ -57,7 +59,7 @@ export class BarChart extends HTMLElement {
         labelBox.setAttribute('y', `${boxY}`);
         labelBox.setAttribute('width', `${width}`);
         labelBox.setAttribute('height', `${height}`);
-        labelBox.setAttribute('fill', '#A11111');
+        labelBox.setAttribute('fill', '#ff5d73');
         this.label.appendChild(labelBox);
 
         const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -65,7 +67,7 @@ export class BarChart extends HTMLElement {
         label.setAttribute('y', `${boxY + (height / 2) }`);
         label.setAttribute('text-anchor', 'start');
         label.setAttribute('font-size', `0.08`);
-        label.setAttribute('fill', 'black');
+        label.setAttribute('fill', '#e8ecf3');
         this.label.appendChild(label);
 
         this.svg.appendChild(this.label);
@@ -77,7 +79,7 @@ export class BarChart extends HTMLElement {
         yLine.setAttribute('y1', '-1');
         yLine.setAttribute('x2', '-1');
         yLine.setAttribute('y2', '3');
-        yLine.setAttribute('stroke', 'black');
+        yLine.setAttribute('stroke', 'rgba(255,255,255,0.25)');
         yLine.setAttribute('stroke-width', '0.02');
         this.svg.appendChild(yLine);
 
@@ -91,7 +93,7 @@ export class BarChart extends HTMLElement {
         xLine.setAttribute('y1', '3');
         xLine.setAttribute('x2', '3');
         xLine.setAttribute('y2', '3');
-        xLine.setAttribute('stroke', 'black');
+        xLine.setAttribute('stroke', 'rgba(255,255,255,0.25)');
         xLine.setAttribute('stroke-width', '0.02');
         this.svg.appendChild(xLine);
 
@@ -112,7 +114,7 @@ export class BarChart extends HTMLElement {
     }
 
     handlePathHover(event, bar, k) {
-        bar.setAttribute('fill', `#555555`);
+        bar.setAttribute('fill', `#ff9aa8`);
         const labelText = `${this.names[k]}: ${this.data[k] * 100}kb`;
         this.tooltip.textContent = labelText;
         this.tooltip.style.opacity = '1';
@@ -120,7 +122,7 @@ export class BarChart extends HTMLElement {
     }
 
     handlePathOut(bar) {
-        bar.setAttribute('fill', `#A11111`);
+        bar.setAttribute('fill', `#ff5d73`);
         this.tooltip.style.opacity = '0';
     }
 

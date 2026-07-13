@@ -39,7 +39,7 @@ export class Point {
     }
 }
 
-export const toSvgArc = (start, end, radius, ratio, fill='none', strk='#A11111', strkWidth='10') => {
+export const toSvgArc = (start, end, radius, ratio, fill='none', strk='#7c9cff', strkWidth='10') => {
     const largeFlag = ratio > .5 ? '1' : '0'
     const pathString = `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeFlag} 0 ${end.x} ${end.y}`;
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");

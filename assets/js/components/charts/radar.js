@@ -29,7 +29,7 @@ class SvgPoint {
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute('cx', `${this.center.x}`);
         circle.setAttribute('cy', `${this.center.y}`);
-        circle.setAttribute('r', `${0.02}`);
+        circle.setAttribute('r', `${0.025}`);
         circle.setAttribute('fill', `${this.color}`);
         circle.addEventListener('mouseover', () => this.handlePathHover());
         circle.addEventListener('mouseout', () => this.handlePathOut());
@@ -69,7 +69,7 @@ export class RadarChart extends HTMLElement {
         this.data = this.getAttribute('data').split(';').map(v => parseFloat(v));
         this.names = this.getAttribute('labels')?.split(';') ?? [];
         const max = Math.max(...this.data);
-        this.svg = strToDom(`<svg viewBox="-1 -1 2 2"></svg>`);
+        this.svg = strToDom(`<svg viewBox="-1.6 -1.3 3.2 2.6"></svg>`);
 
         this.circles = [];
         for (let i = 1; i <= 10; i++) {
@@ -90,14 +90,17 @@ export class RadarChart extends HTMLElement {
             line.setAttribute('y2', `${point.y}`);
 
             const text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
-            text.setAttribute('x', `${point.x}`)
-            text.setAttribute('y', `${point.y}`)
-            text.setAttribute('font-size', `0.07`)
-            text.setAttribute('fill', `black`)
+            text.setAttribute('x', `${point.x * 1.14}`)
+            text.setAttribute('y', `${point.y * 1.14}`)
+            text.setAttribute('font-size', `0.08`)
+            text.setAttribute('fill', `#e8ecf3`)
+            text.setAttribute('text-anchor', point.x > 0.15 ? 'start' : point.x < -0.15 ? 'end' : 'middle')
+            text.setAttribute('dominant-baseline', 'middle')
+            text.setAttribute('font-family', 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif')
             text.textContent  = this.names[i]
 
-            line.setAttribute('stroke-width', `0.001`);
-            line.setAttribute('stroke', `blue`);
+            line.setAttribute('stroke-width', `0.004`);
+            line.setAttribute('stroke', `rgba(255,255,255,0.12)`);
             this.svg.appendChild(text)
             this.svg.appendChild(line);
         }
@@ -118,10 +121,10 @@ export class RadarChart extends HTMLElement {
         });
 
         path.setAttribute('d', `${start} ${this.lines.join(' ')}Z`);
-        path.setAttribute('fill', 'rgba(255, 99, 132, 0.2)');
-        path.setAttribute('stroke', 'rgb(255, 99, 132)');
-        path.setAttribute('stroke-width', '.01');
-        path.setAttribute('fill-opacity', '.5');
+        path.setAttribute('fill', 'rgba(124, 156, 255, 0.25)');
+        path.setAttribute('stroke', '#8ea2ff');
+        path.setAttribute('stroke-width', '.012');
+        path.setAttribute('fill-opacity', '1');
         this.svg.appendChild(path);
     }
 
@@ -145,8 +148,8 @@ export class RadarChart extends HTMLElement {
 
             _path.setAttribute('d', `${_start} ${this._lines.join(' ')}Z`);
             _path.setAttribute('fill', 'none');
-            _path.setAttribute('stroke', 'blue');
-            _path.setAttribute('stroke-width', '.001');
+            _path.setAttribute('stroke', 'rgba(124, 156, 255, 0.16)');
+            _path.setAttribute('stroke-width', '.005');
             _path.setAttribute('fill-opacity', '.5');
             // this.svg.appendChild(_path);
             this.lines.push(_path);
@@ -173,7 +176,7 @@ export class RadarChart extends HTMLElement {
     PlaceDataPoints() {
         this.circles = this.points.map((point, k) => {
             const center = new Point(point.x, point.y)
-            const circle = new SvgPoint(center, this.colors[k], this.labels[k]).create();
+            const circle = new SvgPoint(center, '#ff5d73', this.labels[k]).create();
             this.svg.appendChild(circle);
             return circle;
         });
@@ -240,8 +243,8 @@ export class RadarChart extends HTMLElement {
             :host {
                 display: block;
                 position: absolute;
-                width: 85%;
-                height: 85%;
+                width: 96%;
+                height: 96%;
                 top: 50%;
                 left: 50%;
                 margin: 0 auto;

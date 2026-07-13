@@ -58,13 +58,14 @@ export default class ProfilePage extends HTMLElement {
 
         this.xpBtn?.addEventListener('click', (e)=> {
             e.preventDefault()
+            this.setActive(this.xpBtn)
             graphContainer.innerHTML = ''
             graphContainer.innerHTML = `<radar-chart data="${this.skills.technicals.map(skill => skill.amount).join(';')}" labels="${this.skills.technicals.map(skill =>  skill.type.split('_')[1]).join(';')}"></radar-chart>`
         })
 
         this.skillBtn?.addEventListener('click', (e)=> {
-            console.log("clicked")
             e.preventDefault()
+            this.setActive(this.skillBtn)
             graphContainer.innerHTML = ''
             graphContainer.innerHTML = `<bar-chart data="${this.xps.map(skill => skill.amount).join(';')}" labels="${this.xps.map(skill => skill.name).join(';')}"></bar-chart>`
         })
@@ -97,6 +98,7 @@ export default class ProfilePage extends HTMLElement {
     }
 
     render() {
+        const titleCase = (s) => (s ?? '').toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
         this.innerHTML = `
             <section class="header">
                 <a href="">GraphQL</a>
@@ -104,8 +106,11 @@ export default class ProfilePage extends HTMLElement {
             </section>
             <section class="left-aside">
                 <div class="level">
-                    <level-chart maxLevel="50" level=${this.user.level}></level-chart>
-                    <div class="user_infos">${this.user.firstName} ${this.user.lastName} - ${this.user.login}</div>
+                    <level-chart maxLevel="100" level=${this.user.level}></level-chart>
+                    <div class="user_infos">
+                        <div class="user-name">${titleCase(this.user.firstName)} ${titleCase(this.user.lastName)}</div>
+                        <div class="user-handle">@${this.user.login}</div>
+                    </div>
                 </div>
                 <div class="technologies">
                     <h3>Technologies</h3>
@@ -133,7 +138,7 @@ export default class ProfilePage extends HTMLElement {
             <section class="right-aside">
                 <div class="navigation">
                     <button id="xp">Technical skill</button>
-                    <button id="skills">xp per project</button>
+                    <button id="skills" class="active">xp per project</button>
                 </div>
                 <div class="graph-container">
                     <bar-chart data="${this.xps.map(skill => skill.amount).join(';')}" labels="${this.xps.map(skill => skill.name).join(';')}"></bar-chart>
@@ -141,6 +146,11 @@ export default class ProfilePage extends HTMLElement {
             </section>
             <section class="footer" style="text-align: center;">made with a lot of pressure</section>
         `
+    }
+
+    setActive(button) {
+        this.querySelectorAll('.navigation button').forEach(btn => btn.classList.remove('active'))
+        button.classList.add('active')
     }
 
     get logoutBtn() {

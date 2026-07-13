@@ -1,100 +1,116 @@
+/* ============================================================
+   Login page — glass card on dark
+   ============================================================ */
+
 .l-form {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: var(--bg-color); /* Change background color to white */
+  min-height: 100vh;
+  padding: 1.5rem;
 }
 
 .form {
-  width: 360px;
-  padding: 4rem 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px var(--shadow-color); /* Change box shadow color */
-  background-color: #f1f1f1; /* Set form background color to grey */
+  width: 100%;
+  max-width: 380px;
+  padding: 3rem 2.25rem;
+  border-radius: var(--radius);
+  background: var(--panel-bg-strong);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow-card);
+  -webkit-backdrop-filter: blur(var(--panel-blur));
+  backdrop-filter: blur(var(--panel-blur));
 }
 
 .form__title {
-  font-weight: 700; /* Increase font weight */
-  margin-bottom: 1.5rem; /* Increase margin */
-  color: var(--text-color); /* Change text color */
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin: 0 0 2rem;
+  text-align: center;
+  color: var(--text-color);
+  letter-spacing: -0.01em;
 }
 
 .form__div {
   position: relative;
-  height: 58px; /* Increase height */
-  margin-bottom: 2rem; /* Increase margin */
+  height: 56px;
+  margin-bottom: 1.75rem;
 }
 
 .form__input {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   font-size: var(--normal-font-size);
-  border: none; /* Remove border */
-  border: 2px solid black; /* Add bottom border */
+  border: 1.5px solid var(--panel-border);
+  border-radius: var(--radius-sm);
   outline: none;
   padding: 1rem;
-  background: none;
-  color: var(--text-color); /* Change text color */
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-color);
+  transition: border-color 0.25s, background 0.25s;
 }
 
 .form__label {
   position: absolute;
-  left: 0.5rem; /* Adjust left position */
-  top: 1rem;
-  padding: 0 0.25rem;
-  background-color: #f1f1f1; /* Set label background color to grey */
-  color: var(--input-color); /* Change text color */
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 0.35rem;
+  background-color: transparent;
+  color: var(--input-color);
   font-size: var(--normal-font-size);
-  transition: .3s;
+  pointer-events: none;
+  transition: 0.25s ease;
 }
 
 .form__button {
   display: block;
-  margin: 0 auto; /* Center button horizontally */
-  padding: 0.75rem 2rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.85rem 2rem;
   outline: none;
   border: none;
-  background-color: var(--first-color);
-  color: var(--bg-color); /* Change text color */
+  background-image: var(--accent-gradient);
+  color: #0b1020;
   font-size: var(--normal-font-size);
-  border-radius: 0.5rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: .3s;
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
 }
 
 .form__button:hover {
-  background-color: var(--second-color); /* Change background color on hover */
-  box-shadow: 0 10px 36px rgba(0, 0, 0, .15);
+  filter: brightness(1.05);
+  box-shadow: 0 12px 28px -8px rgba(124, 156, 255, 0.55);
+  transform: translateY(-1px);
 }
 
-/* Input focus move up label */
-.form__input:focus + .form__label {
-  top: -1.5rem; /* Adjust top position */
-  left: 0; /* Adjust left position */
+.form__button:active {
+  transform: translateY(0);
+}
+
+/* Floating label: on focus or when filled, lift the label to the top border */
+.form__input:focus + .form__label,
+.form__input:not(:placeholder-shown) + .form__label {
+  top: 0;
+  left: 0.6rem;
+  transform: translateY(-50%);
   font-size: var(--small-font-size);
   color: var(--first-color);
+  background-color: #10152a; /* solid chip cuts the input border only when lifted */
 }
 
-/* Input focus sticky top label */
-.form__input:not(:placeholder-shown).form__input:not(:focus) + .form__label {
-  top: -1.5rem; /* Adjust top position */
-  left: 0; /* Adjust left position */
-  font-size: var(--small-font-size);
-}
-
-/* Input focus */
 .form__input:focus {
-  border-color: var(--first-color); /* Change border color on focus */
+  border-color: var(--first-color);
+  background: rgba(124, 156, 255, 0.06);
 }
-
-
 
 #error-message {
   text-align: center;
-  color: red;
-  margin-bottom: 4vh;
+  color: #ff8a9b;
+  min-height: 1.2em;
+  margin: 0 0 1rem;
+  font-size: var(--small-font-size);
 }

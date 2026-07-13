@@ -38,12 +38,22 @@ export default class LevelChart extends HTMLElement {
                 flex-direction: column;
                 align-items: center;
                 position: absolute;
-                color: var(--grey90);
-                font-family: 'IBM Plex Mono', monospace;
+                color: #e8ecf3;
+                font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
             }
 
-            .level, .value {
-                font-size: 1.5rem;
+            .level {
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.14em;
+                color: #9aa4b2;
+            }
+
+            .value {
+                font-size: 2.2rem;
+                font-weight: 700;
+                line-height: 1.15;
             }
 
             @keyframes drawArc {
@@ -88,13 +98,14 @@ export default class LevelChart extends HTMLElement {
     }
 
     calculatePathString() {
+        const ratio = Math.min(this.level / this.maxLevel, 0.9999); // clamp so the arc never overshoots a full circle
         const start = -60;
         const startAngle = angleToRad(start);
         const startPt = Point.fromAngle(startAngle, 35, 50, 50);
-        const end = (-this.level / this.maxLevel * 360) + start;
+        const end = (-ratio * 360) + start;
         const endAngle = angleToRad(end);
         const endPt = Point.fromAngle(endAngle, 35, 50, 50);
-        return toSvgArc(startPt, endPt, 35, this.level / this.maxLevel);
+        return toSvgArc(startPt, endPt, 35, ratio);
     }
 
     createInfos() {
