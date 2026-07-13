@@ -253,6 +253,15 @@ export class RadarChart extends HTMLElement {
             svg {
                 width: 100%;
                 height: 100%;
+                animation: radarIn .8s cubic-bezier(.22, 1.2, .36, 1) backwards;
+                transform-origin: center;
+            }
+            @keyframes radarIn {
+                from { opacity: 0; transform: scale(.55) rotate(-8deg); }
+                to   { opacity: 1; transform: scale(1) rotate(0); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                svg { animation: none; }
             }
             circle {
                 cursor: pointer;

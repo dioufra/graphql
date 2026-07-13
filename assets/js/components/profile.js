@@ -114,7 +114,7 @@ export default class ProfilePage extends HTMLElement {
                 </div>
                 <div class="technologies">
                     <h3>Technologies</h3>
-                    ${this.skills.technologies.map(skill => `<progress-bar value=${skill.amount} label=${skill.type}></progress-bar>`).join('')}
+                    ${this.skills.technologies.map((skill, i) => `<progress-bar value=${skill.amount} label=${skill.type} index=${i}></progress-bar>`).join('')}
                 </div>
             </section>
             <section class="attributes">

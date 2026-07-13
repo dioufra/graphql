@@ -26,6 +26,9 @@ export default class ProgressChart extends HTMLElement {
         progressPath.setAttribute('d', `M 2 4 L ${progressEnd} 4`);
         progressPath.classList.add('progress-bar');
 
+        const index = parseInt(this.getAttribute('index')) || 0;
+        progressPath.style.animationDelay = `${0.25 + index * 0.12}s`;
+
         this.svg.append(backgroundPath, progressPath);
         row.append(labelEl, this.svg);
 
@@ -72,6 +75,16 @@ export default class ProgressChart extends HTMLElement {
                 stroke: #ff5d73;
                 stroke-width: 5;
                 stroke-linecap: round;
+                transform-box: fill-box;
+                transform-origin: left center;
+                animation: growProgress .9s cubic-bezier(.2, .8, .2, 1) backwards;
+            }
+            @keyframes growProgress {
+                from { transform: scaleX(0); }
+                to   { transform: scaleX(1); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .progress-bar { animation: none; }
             }
             .tooltip {
                 font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;

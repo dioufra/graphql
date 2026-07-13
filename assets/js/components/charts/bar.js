@@ -29,6 +29,7 @@ export class BarChart extends HTMLElement {
             bar.setAttribute('height', `${height + 0.02}`);
             bar.setAttribute('rx', `${(this.barWidth - gap) * 0.15}`);
             bar.setAttribute('fill', `#ff5d73`);
+            bar.style.animationDelay = `${k * 0.035}s`;
             bar.addEventListener('mouseover', (e) => this.handlePathHover(e, bar, k));
             bar.addEventListener('mouseout', () => this.handlePathOut(bar));
             this.svg.appendChild(bar);
@@ -153,6 +154,19 @@ export class BarChart extends HTMLElement {
             svg {
                 width: 100%;
                 height: 100%;
+            }
+            rect {
+                transform-box: fill-box;
+                transform-origin: bottom;
+                animation: growBar .8s cubic-bezier(.22, 1.2, .36, 1) backwards;
+                transition: fill .2s;
+            }
+            @keyframes growBar {
+                from { transform: scaleY(0); }
+                to   { transform: scaleY(1); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                rect { animation: none; }
             }
             circle {
                 cursor: pointer;
